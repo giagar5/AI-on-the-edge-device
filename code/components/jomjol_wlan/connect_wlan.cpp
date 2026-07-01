@@ -627,6 +627,10 @@ esp_err_t wifi_init_sta(void)
 
     strcpy((char*)wifi_config.sta.ssid, (const char*)wlan_config.ssid.c_str());
     strcpy((char*)wifi_config.sta.password, (const char*)wlan_config.password.c_str());
+	// Lock to the near repeater BSSID -> stop mesh steering
+    wifi_config.sta.bssid_set = 1;
+    uint8_t lock_bssid[6] = {0x0c, 0xc5, 0x74, 0x84, 0xda, 0x51};
+    memcpy(wifi_config.sta.bssid, lock_bssid, 6);
 
     retval = esp_wifi_set_mode(WIFI_MODE_STA);
 	if (retval != ESP_OK) {
