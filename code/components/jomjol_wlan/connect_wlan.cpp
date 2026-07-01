@@ -650,6 +650,7 @@ esp_err_t wifi_init_sta(void)
 		LogFile.WriteToFile(ESP_LOG_ERROR, TAG, "esp_wifi_start: Error: "  + std::to_string(retval));
 		return retval;
 	}
+    esp_wifi_set_ps(WIFI_PS_NONE);   // disable modem-sleep: fix GTK-rekey timeout drops
 
     if (!wlan_config.hostname.empty())
     {
